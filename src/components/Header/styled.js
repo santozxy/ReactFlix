@@ -21,3 +21,4 @@ export const Title = styled.Text`
     font-weight: bold;
     margin-left: 14px;
 `
+

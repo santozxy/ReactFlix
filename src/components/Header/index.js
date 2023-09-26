@@ -10,7 +10,7 @@ const Header = ({ title }) => {
     return (
         <Container>
             <MenuButton onPress={() => navigation.openDrawer()}>
-                <Feather name='menu' size={36} color={"#fff"} />
+                <Feather name='menu' size={36} color={"#e72f49"} />
             </MenuButton>
             <Title>{title}</Title>
         </Container>
