@@ -64,7 +64,7 @@ const Home = () => {
         const nowList = getListMovies(10, nowData.data.results)
         const popularList = getListMovies(10, popularData.data.results.slice(10))
         const topList = getListMovies(10, topData.data.results)
-        setBannerMovie(randomBanner(nowData.data.results))
+        setBannerMovie(nowData.data.results[randomBanner(nowData.data.results)])
         setNowMovies(nowList);
         setPopularMovies(popularList);
         setTopMovies(topList);
@@ -79,6 +79,10 @@ const Home = () => {
     }
   }, [focused])
 
+
+  function navigateDetails(item) {
+    navigation.navigate('Details', { id: item.id })
+  }
 
   if (loading) {
     return (
@@ -100,16 +104,16 @@ const Home = () => {
       </SearchContainer>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Title>Em cartaz</Title>
-        <BannerButton activeOpacity={.8} onPress={() => alert('teste')}>
+        <BannerButton activeOpacity={.8} onPress={() => navigateDetails(bannerMovie)}>
           <Banner
-            source={{ uri: 'https://miro.medium.com/v2/resize:fit:720/format:webp/0*qdHImq1G588SB9Ii.jpg' }} resizeMethod='resize'
+            source={{ uri: `https://image.tmdb.org/t/p/original/${bannerMovie.backdrop_path}` }} resizeMethod='resize'
           />
         </BannerButton>
         <SliderMovie
           horizontal
           showsHorizontalScrollIndicator={false}
           data={nowMovies}
-          renderItem={({ item }) => <SliderItem data={item} />}
+          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
           keyExtractor={(item) => String(item.id)}
         />
         <Title>Populares</Title>
@@ -117,7 +121,7 @@ const Home = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={popularMovies}
-          renderItem={({ item }) => <SliderItem data={item} />}
+          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
           keyExtractor={(item) => String(item.id)}
         />
         <Title>Mais votados</Title>
@@ -125,7 +129,7 @@ const Home = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={topMovies}
-          renderItem={({ item }) => <SliderItem data={item} />}
+          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
           keyExtractor={(item) => String(item.id)}
         />
       </ScrollView>

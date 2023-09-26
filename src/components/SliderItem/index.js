@@ -2,9 +2,9 @@ import { Container, BannerItem, Title, RateContainer, Rate } from './styles'
 import api from '../../services/api'
 import { Ionicons } from '@expo/vector-icons'
 
-const SliderItem = ({ data }) => {
+const SliderItem = ({ data,navigateDetails }) => {
     return (
-        <Container activeOpacity={.8}>
+        <Container activeOpacity={.8} onPress={navigateDetails}>
             <BannerItem source={{ uri: `https://image.tmdb.org/t/p/original/${data.poster_path}` }} />
             <Title numberOfLines={1} ellipsizeMode='tail'>{data.title}</Title>
             
