@@ -14,7 +14,7 @@ function StackRoutes() {
         component={Home} />
       <Stack.Screen
         name="Details"
-        options={{ headerShown: false }}
+        options={{ headerShown: false, title: 'Detalhes' }}
         component={Details} />
     </Stack.Navigator>
   );

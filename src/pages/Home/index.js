@@ -19,12 +19,20 @@ import { getListMovies, randomBanner } from '../../utils/movie';
 
 const Home = () => {
   const navigation = useNavigation();
+
   const focused = useIsFocused();
+
   const [bannerMovie, setBannerMovie] = useState({})
+
   const [nowMovies, setNowMovies] = useState([])
+
   const [popularMovies, setPopularMovies] = useState([])
+
   const [topMovies, setTopMovies] = useState([])
+
   const [loading, setLoading] = useState(true)
+
+
   useEffect(() => {
     let isActive = true;
     const ac = new AbortController();
@@ -64,6 +72,7 @@ const Home = () => {
         const nowList = getListMovies(10, nowData.data.results)
         const popularList = getListMovies(10, popularData.data.results.slice(10))
         const topList = getListMovies(10, topData.data.results)
+
         setBannerMovie(nowData.data.results[randomBanner(nowData.data.results)])
         setNowMovies(nowList);
         setPopularMovies(popularList);
