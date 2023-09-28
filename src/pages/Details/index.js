@@ -98,7 +98,7 @@ function Details() {
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({item}) => <Genres data={item} />}
+        renderItem={({ item }) => <Genres data={item} />}
       />
     </Container>
   );
