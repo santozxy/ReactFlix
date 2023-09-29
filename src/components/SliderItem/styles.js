@@ -2,15 +2,15 @@ import styled from "styled-components/native";
 
 
 export const Container = styled.TouchableOpacity`
-    padding: 16px;
-    width: 140px;
+    padding: 16px 0;
+    width: 120px;
     height: 180px;
-    margin:  0 0 50px;
+    margin-right: 20px;
 `
 
 export const BannerItem = styled.Image`
     width:100%;
-    height: 160px;
+    height: 170px;
     border-radius: 8px;
 `
 
