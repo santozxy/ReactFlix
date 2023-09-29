@@ -5,11 +5,10 @@ export const Container = styled.SafeAreaView`
     flex: 1;
 
 `
-
 export const Header = styled.View`
     z-index: 99;
     position: absolute;
-    top: 80px;
+    top: 70px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -58,8 +57,22 @@ export const Title = styled.Text`
     font-size: 20px;
     font-weight: bold;
 `
+export const RatedContainer = styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0;
+`
 
 export const Rate = styled.Text`
+    padding-left: 14px;
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+`
+
+export const Votes = styled.Text`
+    padding-right: 14px;
     color: #fff;
     font-size: 22px;
     font-weight: bold;
@@ -70,4 +83,15 @@ export const ListGenres = styled.FlatList`
     margin: 8px 0;
     max-height: 40px;
     min-height: 40px;
+`
+
+export const Description = styled.Text`
+    padding: 0 14px 30px;
+    color: #fff;
+    line-height: 20px;
+`
+
+export const SliderMovie = styled.FlatList`
+    height: 250px;
+    padding: 0 14px;
 `

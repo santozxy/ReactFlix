@@ -7,9 +7,10 @@ export const Container = styled.View`
     margin-right:8px;
     padding: 5px 8px;
     border-radius: 8px;
-    background-color: #ccc;
+    background-color: #e72f49;
 `
 
 export const Name = styled.Text`
-
+    color: #fff;
+    font-weight: bold;
 `

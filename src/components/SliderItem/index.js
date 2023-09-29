@@ -10,7 +10,7 @@ const SliderItem = ({ data, navigateDetails }) => {
 
             <RateContainer>
                 <Ionicons name='md-star' size={22} color="#e7a74e" />
-                <Rate>{data.vote_average}/10</Rate>
+                <Rate>{data.vote_average.toFixed(1)}/10</Rate> 
             </RateContainer>
         </Container>
     )
