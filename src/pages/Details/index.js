@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import {
   Container,
@@ -17,14 +17,13 @@ import {
   SliderMovie
 } from "./styles";
 
-import { ScrollView, Modal } from "react-native";
+import { Modal } from "react-native";
 
 import { Feather, Ionicons } from "@expo/vector-icons";
 
 import {
   useNavigation,
   useRoute,
-  useIsFocused,
 } from "@react-navigation/native";
 
 import api, { key } from "../../services/api";
@@ -36,11 +35,15 @@ import SliderItem from "../../components/SliderItem";
 function Details() {
   const navigation = useNavigation();
 
+  const scrollViewRef = useRef();
+
   const route = useRoute();
 
   const [movie, setMovie] = useState({});
 
   const [similars, setSimilars] = useState({});
+
+  const [loading, setLoading] = useState(false);
 
   const [openLink, setOpenLink] = useState(false);
 
@@ -71,6 +74,7 @@ function Details() {
 
     }
     getMovie();
+    scrollTop();
 
     return () => {
       isActive = false;
@@ -78,13 +82,19 @@ function Details() {
     };
   }, [route]);
 
+  function scrollTop() {
+
+    scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true });
+
+  }
+
   function navigateDetails(item) {
     navigation.navigate('Details', { id: item.id })
   }
 
 
   return (
-    <Container>
+    <Container ref={scrollViewRef} showsVerticalScrollIndicator={false}>
       <Header>
         <HeaderButton onPress={() => navigation.goBack()}>
           <Feather
@@ -128,22 +138,20 @@ function Details() {
         renderItem={({ item }) => <Genres data={item} />}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Title>
-          Descrição
-        </Title>
-        <Description>{movie.overview}</Description>
-        <Title>
-          Filmes parecidos
-        </Title>
-        <SliderMovie
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={similars}
-          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
-          keyExtractor={(item) => String(item.id)}
-        />
-      </ScrollView>
+      <Title>
+        Descrição
+      </Title>
+      <Description>{movie.overview}</Description>
+      <Title>
+        Filmes parecidos
+      </Title>
+      <SliderMovie
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={similars}
+        renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
+        keyExtractor={(item) => String(item.id)}
+      />
       <Modal animationType="slide" transparent visible={openLink}>
         <ModalLink link={movie.homepage} title={movie?.title} closeModal={() => setOpenLink(false)} />
       </Modal>
