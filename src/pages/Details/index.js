@@ -31,6 +31,7 @@ import Genres from "../../components/Genres";
 import ModalLink from "../../components/ModalLink";
 import { getListMovies } from "../../utils/movie";
 import SliderItem from "../../components/SliderItem";
+import { saveMovie, haveMovie, deleteMovie } from "../../utils/storage";
 
 function Details() {
   const navigation = useNavigation();
@@ -46,6 +47,9 @@ function Details() {
   const [loading, setLoading] = useState(false);
 
   const [openLink, setOpenLink] = useState(false);
+
+  const [favorited, setFavorited] = useState(false);
+
 
   useEffect(() => {
     let isActive = true;
@@ -70,6 +74,8 @@ function Details() {
       if (isActive) {
         setMovie(movieDetail.data)
         setSimilars(getListMovies(8, movieSimilar.data.results))
+        const isFavorited = await haveMovie(movieDetail.data)
+        setFavorited(isFavorited)
       }
 
     }
@@ -83,15 +89,26 @@ function Details() {
   }, [route]);
 
   function scrollTop() {
-
     scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true });
-
   }
 
   function navigateDetails(item) {
     navigation.navigate('Details', { id: item.id })
   }
 
+  async function favoriteMovie(movie) {
+
+    if (favorited) {
+      await deleteMovie(movie.id);
+      setFavorited(false);
+      alert('filme foi removido')
+    }
+    else {
+      await saveMovie('@reactflix', movie)
+      setFavorited(true);
+      alert('filme foi salvo')
+    }
+  }
 
   return (
     <Container ref={scrollViewRef} showsVerticalScrollIndicator={false}>
@@ -103,12 +120,20 @@ function Details() {
             color="#fff"
           />
         </HeaderButton>
-        <HeaderButton>
-          <Ionicons
-            name="bookmark"
-            size={28}
-            color="#fff"
-          />
+        <HeaderButton onPress={() => favoriteMovie(movie)}>
+          {favorited ?
+            <Ionicons
+              name="bookmark"
+              size={28}
+              color="#fff"
+            />
+            :
+            <Ionicons
+              name="bookmark-outline"
+              size={28}
+              color="#fff"
+            />
+          }
         </HeaderButton>
       </Header>
       <BannerContainer>

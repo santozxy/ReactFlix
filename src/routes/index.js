@@ -32,7 +32,7 @@ const Routes = () => {
                     )
                 }}
                 component={StackRoutes} />
-                
+
             <Drawer.Screen
                 name="Movies"
                 options={{

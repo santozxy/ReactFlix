@@ -22,6 +22,8 @@ const Home = () => {
 
   const focused = useIsFocused();
 
+  const [search, setSearch] = useState('');
+
   const [bannerMovie, setBannerMovie] = useState({})
 
   const [nowMovies, setNowMovies] = useState([])
@@ -32,6 +34,14 @@ const Home = () => {
 
   const [loading, setLoading] = useState(true)
 
+
+  // const response = await api.get('/movie/now_playing', {
+  //   params: {
+  //     api_key: key,
+  //     language: 'pt-BR',
+  //     page: 1,
+  //   }
+  // })
 
   useEffect(() => {
     let isActive = true;
@@ -60,13 +70,6 @@ const Home = () => {
           }
         }),
       ])
-      // const response = await api.get('/movie/now_playing', {
-      //   params: {
-      //     api_key: key,
-      //     language: 'pt-BR',
-      //     page: 1,
-      //   }
-      // })
 
       if (isActive) {
         const nowList = getListMovies(10, nowData.data.results)
@@ -93,6 +96,12 @@ const Home = () => {
     navigation.navigate('Details', { id: item.id })
   }
 
+  function handleSearch() {
+    if (search === '') return;
+    navigation.navigate('Search', { name: search })
+    setSearch("")
+  }
+
   if (loading) {
     return (
       <Container>
@@ -106,8 +115,12 @@ const Home = () => {
       <Header title={"React Flix"} />
       <SearchContainer>
         <Input
-          placeholder="Ex Vingadores" placeholderTextColor='#ccc' />
-        <SearchButton>
+          placeholder="Ex Vingadores"
+          placeholderTextColor='#ccc'
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+        />
+        <SearchButton onPress={handleSearch}>
           <Feather name='search' size={30} color='#e72f49' />
         </SearchButton>
       </SearchContainer>
@@ -122,24 +135,24 @@ const Home = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={nowMovies}
-          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
           keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
         />
         <Title>Populares</Title>
         <SliderMovie
           horizontal
           showsHorizontalScrollIndicator={false}
           data={popularMovies}
-          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
           keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
         />
         <Title>Mais votados</Title>
         <SliderMovie
           horizontal
           showsHorizontalScrollIndicator={false}
           data={topMovies}
-          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
           keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
         />
       </ScrollView>
     </Container>
