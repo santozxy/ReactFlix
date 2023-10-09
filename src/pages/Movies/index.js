@@ -5,12 +5,13 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 import { getMoviesSave } from '../../utils/storage';
 import FavoriteItem from '../../components/FavoriteItem';
+import Loading from '../../components/Loading';
 
 
-function Movies() {
-    const navigation = useNavigation();
+function Movies({ navigation }) {
     const focused = useIsFocused();
     const [movies, setMovies] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         let isActive = true
@@ -22,9 +23,12 @@ function Movies() {
         }
         if (isActive) {
             getFavoriteMovies()
+            setLoading(false)
         }
         return () => {
             isActive = false
+            setLoading(true)
+
         }
     }, [focused])
 
@@ -32,6 +36,13 @@ function Movies() {
         navigation.navigate('Details', { id: item.id })
     }
 
+    if (loading) {
+        return (
+            <Container>
+                <Loading />
+            </Container>
+        )
+    }
     return (
         <Container>
             <Header title='Meus filmes' />

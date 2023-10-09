@@ -20,10 +20,10 @@ function StackRoutes() {
       <Stack.Screen
         name="Search"
         options={({ route }) => ({
-          title: `Buscar por "${route.params.name}"`,
+          title: `Resultado da buscar por:`,
           headerTintColor: "#FFF",
           headerStyle: {
-            backgroundColor: "#141a29"
+            backgroundColor: "#1d1d1d"
           },
           headerTitleStyle: {
             color: '#FFF',

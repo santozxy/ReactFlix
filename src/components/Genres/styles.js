@@ -7,10 +7,10 @@ export const Container = styled.View`
     margin-right:8px;
     padding: 5px 8px;
     border-radius: 8px;
-    background-color: #e72f49;
+    background-color: ${props => props.theme.colors.primary};
 `
 
 export const Name = styled.Text`
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     font-weight: bold;
 `

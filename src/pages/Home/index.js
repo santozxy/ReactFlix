@@ -1,24 +1,27 @@
 import { StyleSheet, ScrollView, ActivityIndicator } from 'react-native'
 import { useState, useEffect } from 'react';
 import { useNavigation, useIsFocused } from '@react-navigation/native'
+import { Dimensions, Text, View } from 'react-native';
+import Carousel from 'react-native-reanimated-carousel';
 
 import {
   Container,
   SearchContainer,
   Input, SearchButton,
   Title, BannerButton,
-  Banner, SliderMovie
+  Banner, SliderMovie,
+  BannerTitle
 } from './styles'
 
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from '../../components/Header'
 import SliderItem from '../../components/SliderItem';
 import api, { key } from '../../services/api';
 import { getListMovies, randomBanner } from '../../utils/movie';
+import Loading from '../../components/Loading';
 
 
-const Home = () => {
-  const navigation = useNavigation();
+const Home = ({ navigation }) => {
 
   const focused = useIsFocused();
 
@@ -34,6 +37,7 @@ const Home = () => {
 
   const [loading, setLoading] = useState(true)
 
+  const width = Dimensions.get('window').width;
 
   // const response = await api.get('/movie/now_playing', {
   //   params: {
@@ -73,10 +77,10 @@ const Home = () => {
 
       if (isActive) {
         const nowList = getListMovies(10, nowData.data.results)
-        const popularList = getListMovies(10, popularData.data.results.slice(10))
+        const popularList = getListMovies(10, popularData.data.results)
         const topList = getListMovies(10, topData.data.results)
 
-        setBannerMovie(nowData.data.results[randomBanner(nowData.data.results)])
+        setBannerMovie(nowData.data.results)
         setNowMovies(nowList);
         setPopularMovies(popularList);
         setTopMovies(topList);
@@ -105,8 +109,7 @@ const Home = () => {
   if (loading) {
     return (
       <Container>
-        <ActivityIndicator size={'large'} color='#e72f49' />
-        <Title>Carregando</Title>
+        <Loading />
       </Container>
     )
   }
@@ -115,7 +118,7 @@ const Home = () => {
       <Header title={"React Flix"} />
       <SearchContainer>
         <Input
-          placeholder="Ex Vingadores"
+          placeholder="Pesquisar por..."
           placeholderTextColor='#ccc'
           value={search}
           onChangeText={(text) => setSearch(text)}
@@ -126,18 +129,23 @@ const Home = () => {
       </SearchContainer>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Title>Em cartaz</Title>
-        <BannerButton activeOpacity={.8} onPress={() => navigateDetails(bannerMovie)}>
-          <Banner
-            source={{ uri: `https://image.tmdb.org/t/p/original/${bannerMovie.backdrop_path}` }} resizeMethod='resize'
-          />
-        </BannerButton>
-        <SliderMovie
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={nowMovies}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
+        <Carousel
+          loop
+          width={width}
+          height={width / 1.7}
+          autoPlay={true}
+          data={bannerMovie}
+          scrollAnimationDuration={2500}
+          renderItem={({ item }) => (
+            <BannerButton activeOpacity={.8} onPress={() => navigateDetails(item)}>
+              <Banner
+                source={{ uri: `https://image.tmdb.org/t/p/original/${item.backdrop_path}` }} resizeMethod='resize'
+              />
+              <BannerTitle><MaterialCommunityIcons name='movie-open' color="#e72f49" size={17} /> {item.title}</BannerTitle>
+            </BannerButton>
+          )}
         />
+
         <Title>Populares</Title>
         <SliderMovie
           horizontal

@@ -1,10 +1,22 @@
 import styled from "styled-components/native";
 
 export const Container = styled.ScrollView`
-    background-color:#191a30;
+    background-color:${props => props.theme.colors.secondary};
     flex: 1;
-
+    padding: 4px 0 50px;
 `
+
+
+export const ContainerLoad = styled.SafeAreaView`
+    background-color:${props => props.theme.colors.secondary};
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 0 50px;
+`
+
 export const Header = styled.View`
     z-index: 99;
     position: absolute;
@@ -19,7 +31,7 @@ export const Header = styled.View`
 export const HeaderButton = styled.TouchableOpacity`
     width: 46px;
     height: 46px;
-    background-color: rgba(25,26,48,0.8);
+    background-color: #1d1d1dcc;
     border-radius: 23px;
     align-items: center;
     justify-content: center;
@@ -32,6 +44,7 @@ export const Banner = styled.Image`
     opacity:.6;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    box-shadow: 10px 10px 10px #000;
 `
 
 export const BannerContainer = styled.TouchableOpacity`
@@ -39,7 +52,7 @@ export const BannerContainer = styled.TouchableOpacity`
 `
 
 export const ButtonLink = styled.TouchableOpacity`
-    background-color: #e72f49;
+    background-color: ${props => props.theme.colors.primary};
     width: 60px;
     height: 60px;
     border-radius: 35px;
@@ -53,7 +66,7 @@ export const ButtonLink = styled.TouchableOpacity`
 
 export const Title = styled.Text`
     padding: 20px 14px 8px;
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     font-size: 20px;
     font-weight: bold;
 `
@@ -66,14 +79,14 @@ export const RatedContainer = styled.View`
 
 export const Rate = styled.Text`
     padding-left: 14px;
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     font-size: 22px;
     font-weight: bold;
 `
 
 export const Votes = styled.Text`
     padding-right: 14px;
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     font-size: 22px;
     font-weight: bold;
 `
@@ -87,11 +100,10 @@ export const ListGenres = styled.FlatList`
 
 export const Description = styled.Text`
     padding: 0 14px 30px;
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     line-height: 20px;
 `
 
 export const SliderMovie = styled.FlatList`
-    height: 250px;
-    padding: 0 14px;
+    height: 300px;
 `

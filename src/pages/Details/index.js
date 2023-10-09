@@ -14,7 +14,8 @@ import {
   Votes,
   ListGenres,
   Description,
-  SliderMovie
+  SliderMovie,
+  ContainerLoad
 } from "./styles";
 
 import { Modal } from "react-native";
@@ -32,9 +33,9 @@ import ModalLink from "../../components/ModalLink";
 import { getListMovies } from "../../utils/movie";
 import SliderItem from "../../components/SliderItem";
 import { saveMovie, haveMovie, deleteMovie } from "../../utils/storage";
+import Loading from "../../components/Loading";
 
-function Details() {
-  const navigation = useNavigation();
+function Details({navigation}) {
 
   const scrollViewRef = useRef();
 
@@ -44,7 +45,7 @@ function Details() {
 
   const [similars, setSimilars] = useState({});
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [openLink, setOpenLink] = useState(false);
 
@@ -57,13 +58,13 @@ function Details() {
 
     async function getMovie() { //Requisição dos detalhes do filme à partir do ID
       const [movieDetail, movieSimilar] = await Promise.all([
-        api.get(`/movie/${route.params?.id}`, {
+        api.get(`/movie/${route.params.id}`, {
           params: {
             api_key: key,
             language: "pt-BR",
           }
         }),
-        api.get(`/movie/${route.params?.id}/similar`, {
+        api.get(`/movie/${route.params.id}/similar`, {
           params: {
             api_key: key,
             language: "pt-BR",
@@ -76,6 +77,7 @@ function Details() {
         setSimilars(getListMovies(8, movieSimilar.data.results))
         const isFavorited = await haveMovie(movieDetail.data)
         setFavorited(isFavorited)
+        setLoading(false)
       }
 
     }
@@ -84,6 +86,7 @@ function Details() {
 
     return () => {
       isActive = false;
+      setLoading(true);
       ac.abort;
     };
   }, [route]);
@@ -110,6 +113,14 @@ function Details() {
     }
   }
 
+  if (loading) {
+    return (
+      <ContainerLoad>
+        <Loading />
+      </ContainerLoad>
+    )
+  }
+
   return (
     <Container ref={scrollViewRef} showsVerticalScrollIndicator={false}>
       <Header>
@@ -125,7 +136,7 @@ function Details() {
             <Ionicons
               name="bookmark"
               size={28}
-              color="#fff"
+              color="#e72f49"
             />
             :
             <Ionicons

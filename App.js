@@ -1,13 +1,15 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'react-native';
-
 import Routes from './src/routes';
+import { ThemeProvider } from 'styled-components/native';
+import { darkTheme } from './theme';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Routes/>
-    </NavigationContainer>
+    <ThemeProvider theme={darkTheme}>
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }

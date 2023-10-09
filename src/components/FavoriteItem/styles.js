@@ -9,12 +9,12 @@ export const Container = styled.TouchableOpacity`
 `
 export const Title = styled.Text`
     padding: 8px;
-    color: #e72f49;
+    color: ${props => props.theme.colors.textColor};
     font-size: 18px;
     font-weight: bold;
     position: absolute;
     width: 100%;
-    background-color: #191a41;
+    background-color:  ${props => props.theme.colors.backTransparent};
     bottom: 0;
 `
 export const Banner = styled.Image`
@@ -28,14 +28,14 @@ export const BannerContainer = styled.View`
 
 export const Rate = styled.Text`
     padding-left: 14px;
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     font-size: 22px;
     font-weight: bold;
 `
 
 export const Votes = styled.Text`
     padding-right: 14px;
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     font-size: 22px;
     font-weight: bold;
 `

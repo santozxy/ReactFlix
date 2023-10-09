@@ -12,11 +12,10 @@ export const MenuButton = styled.TouchableOpacity`
     height: 80px;
     align-items: center;
     flex-direction: row;
-    
 `
 
 export const Title = styled.Text`
-    color:#fff;
+    color:${props => props.theme.colors.textColor};
     font-size: 30px;
     font-weight: bold;
     margin-left: 14px;

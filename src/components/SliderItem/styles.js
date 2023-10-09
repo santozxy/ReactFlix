@@ -1,11 +1,9 @@
 import styled from "styled-components/native";
 
-
 export const Container = styled.TouchableOpacity`
-    padding: 16px 0;
     width: 120px;
-    height: 180px;
-    margin-right: 20px;
+    height: 220px;
+    margin: 10px 10px;
 `
 
 export const BannerItem = styled.Image`
@@ -16,7 +14,7 @@ export const BannerItem = styled.Image`
 
 export const Title = styled.Text`
     padding-top: 8px;
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     font-size: 14px;
 `
 
@@ -26,6 +24,6 @@ export const RateContainer = styled.View`
 `
 export const Rate = styled.Text`
     padding-left: 4px;
-    color: #fff;
+    color: ${props => props.theme.colors.textColor};
     font-size: 12px;
 `

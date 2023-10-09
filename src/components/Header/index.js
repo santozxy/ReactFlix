@@ -3,14 +3,11 @@ import React from 'react'
 import { Feather } from '@expo/vector-icons'
 
 import { Container, Title, MenuButton } from './styled'
-import { useNavigation } from '@react-navigation/native'
-
 const Header = ({ title }) => {
-    const navigation = useNavigation();
     return (
         <Container>
-            <MenuButton onPress={() => navigation.openDrawer()}>
-                <Feather name='menu' size={36} color={"#e72f49"} />
+            <MenuButton>
+                <Feather name='video' size={36} color={"#e72f49"} />
             </MenuButton>
             <Title>{title}</Title>
         </Container>

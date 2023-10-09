@@ -1,52 +1,70 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import StackRoutes from './StackRoutes';
 import Movies from '../pages/Movies';
+import Categories from '../pages/Categories';
+import { darkTheme } from '../../theme';
 
-const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
 const Routes = () => {
     return (
-        <Drawer.Navigator screenOptions={{
+        <Tab.Navigator screenOptions={{
             headerShown: false,
-            drawerStyle: {
-                backgroundColor: "#090a0e",
-                paddingTop: 20
+            tabBarStyle: {
+                position: 'absolute',
+                backgroundColor: darkTheme.colors.secondary,
+                borderColor: darkTheme.colors.textColor,
             },
-            drawerActiveBackgroundColor: '#e72f49',
-            drawerActiveTintColor: '#fff',
-            drawerInactiveTintColor: '#fff'
+            tabBarActiveTintColor: darkTheme.colors.textColor,
+            tabBarInactiveTintColor: '#ccc'
         }}>
-            <Drawer.Screen
-                name="HomeDrawer"
+            <Tab.Screen
+                name="HomeTab"
                 options={{
                     title: 'Início',
-                    drawerIcon: ({ focused, size, color }) => (
+                    tabBarIcon: ({ focused, size, color }) => (
                         <MaterialCommunityIcons
                             name={focused ? 'movie-open' : 'movie-outline'}
                             size={size}
-                            color={color}
+                            color={focused ? darkTheme.colors.primary : color}
                         />
                     )
                 }}
-                component={StackRoutes} />
+                component={StackRoutes}
+            />
 
-            <Drawer.Screen
+            <Tab.Screen
+                name="Categories"
+                options={{
+                    title: 'Categorias',
+                    tabBarIcon: ({ focused, size, color }) => (
+                        <MaterialCommunityIcons
+                            name={focused ? 'view-list' : 'view-list-outline'}
+                            size={size}
+                            color={focused ? darkTheme.colors.primary : color}
+                        />
+                    )
+                }}
+                component={Categories}
+            />
+
+            <Tab.Screen
                 name="Movies"
                 options={{
                     title: 'Meus filmes',
-                    drawerIcon: ({ focused, size, color }) => (
+                    tabBarIcon: ({ focused, size, color }) => (
                         <MaterialCommunityIcons
                             name={focused ? 'archive' : 'archive-outline'}
                             size={size}
-                            color={color}
+                            color={focused ? darkTheme.colors.primary : color}
                         />
                     )
                 }}
-                component={Movies} />
-        </Drawer.Navigator>
+                component={Movies}
+            />
+        </Tab.Navigator >
     );
 }
 
