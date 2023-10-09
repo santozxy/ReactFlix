@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Container, ListMovies, SearchContainer, SearchButton, Input } from './styles'
 import { Feather } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native'
+import {  useRoute } from '@react-navigation/native'
 import api, { key } from '../../services/api'
 import SliderItem from '../../components/SliderItem'
 import Loading from '../../components/Loading'

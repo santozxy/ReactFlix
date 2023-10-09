@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, ListMovies } from './styles'
 import Header from '../../components/Header'
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 
 import { getMoviesSave } from '../../utils/storage';
 import FavoriteItem from '../../components/FavoriteItem';
