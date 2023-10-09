@@ -17,7 +17,7 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from '../../components/Header'
 import SliderItem from '../../components/SliderItem';
 import api, { key } from '../../services/api';
-import { getListMovies, randomBanner } from '../../utils/movie';
+import { getListMovies } from '../../utils/movie';
 import Loading from '../../components/Loading';
 
 
