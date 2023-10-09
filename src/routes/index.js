@@ -4,20 +4,22 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import StackRoutes from './StackRoutes';
 import Movies from '../pages/Movies';
 import Categories from '../pages/Categories';
-import { darkTheme } from '../../theme';
+import { useTheme } from '@react-navigation/native';
+
 
 const Tab = createBottomTabNavigator();
 
 const Routes = () => {
+    const { colors } = useTheme();
     return (
         <Tab.Navigator screenOptions={{
             headerShown: false,
             tabBarStyle: {
                 position: 'absolute',
-                backgroundColor: darkTheme.colors.secondary,
-                borderColor: darkTheme.colors.textColor,
+                backgroundColor: colors.secondary,
+                borderColor: colors.textColor,
             },
-            tabBarActiveTintColor: darkTheme.colors.textColor,
+            tabBarActiveTintColor: colors.textColor,
             tabBarInactiveTintColor: '#ccc'
         }}>
             <Tab.Screen
@@ -28,7 +30,7 @@ const Routes = () => {
                         <MaterialCommunityIcons
                             name={focused ? 'movie-open' : 'movie-outline'}
                             size={size}
-                            color={focused ? darkTheme.colors.primary : color}
+                            color={focused ? colors.primary : color}
                         />
                     )
                 }}
@@ -43,7 +45,7 @@ const Routes = () => {
                         <MaterialCommunityIcons
                             name={focused ? 'view-list' : 'view-list-outline'}
                             size={size}
-                            color={focused ? darkTheme.colors.primary : color}
+                            color={focused ? colors.primary : color}
                         />
                     )
                 }}
@@ -58,7 +60,7 @@ const Routes = () => {
                         <MaterialCommunityIcons
                             name={focused ? 'archive' : 'archive-outline'}
                             size={size}
-                            color={focused ? darkTheme.colors.primary : color}
+                            color={focused ? colors.primary : color}
                         />
                     )
                 }}

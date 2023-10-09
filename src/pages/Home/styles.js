@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 export const Container = styled.SafeAreaView`

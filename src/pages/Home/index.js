@@ -1,7 +1,7 @@
-import { StyleSheet, ScrollView, ActivityIndicator } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import { useState, useEffect } from 'react';
-import { useNavigation, useIsFocused } from '@react-navigation/native'
-import { Dimensions, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native'
+import { Dimensions} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 import {
@@ -81,7 +81,7 @@ const Home = ({ navigation }) => {
         const topList = getListMovies(10, topData.data.results)
 
         setBannerMovie(nowData.data.results)
-        setNowMovies(nowList);
+
         setPopularMovies(popularList);
         setTopMovies(topList);
         setLoading(false)
