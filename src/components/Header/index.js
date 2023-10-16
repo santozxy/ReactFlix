@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons'
-
-import { Container, Title, MenuButton } from './styled'
+import { Container, Title, MenuButton } from './styles'
 const Header = ({ title }) => {
     return (
         <Container>

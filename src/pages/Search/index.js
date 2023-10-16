@@ -1,35 +1,42 @@
-import { useEffect, useState } from 'react'
-import { Container, ListMovies, SearchContainer, SearchButton, Input } from './styles'
-import { Feather } from '@expo/vector-icons';
-import {  useRoute } from '@react-navigation/native'
-import api, { key } from '../../services/api'
-import SliderItem from '../../components/SliderItem'
-import Loading from '../../components/Loading'
-
+import { useEffect, useState } from "react";
+import {
+  Container,
+  ListMovies,
+  SearchContainer,
+  SearchButton,
+  Input,
+  CategoriesContainer,
+  ListCategories,
+} from "./styles";
+import { Feather } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
+import api, { key } from "../../services/api";
+import SliderItem from "../../components/SliderItem";
+import Loading from "../../components/Loading";
 
 function Search({ navigation }) {
   const route = useRoute();
 
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
-  const [search, setSearch] = useState(route.params.name);
+  const [search, setSearch] = useState();
 
   useEffect(() => {
-    let isActive = true
+    let isActive = true;
     async function getSearchMovie() {
       const response = await api.get(`/search/movie`, {
         params: {
           query: search,
           api_key: key,
-          language: 'pt-BR',
+          language: "pt-BR",
           page: 1,
-        }
-      })
+        },
+      });
       if (isActive) {
         setMovies(response.data.results);
-        setLoading(false)
+        setLoading(false);
       }
     }
 
@@ -39,43 +46,50 @@ function Search({ navigation }) {
 
     return () => {
       isActive = false;
-      setLoading(true)
-    }
-  }, [search])
+      setLoading(true);
+    };
+  }, [search]);
 
   function navigateDetails(item) {
-    navigation.navigate('Details', { id: item.id })
+    navigation.navigate("Details", { id: item.id });
   }
 
-
-  const filteredMovies = movies.filter(item => item.release_date !== null && item.poster_path !== null);
+  const filteredMovies = movies.filter(
+    (item) => item.release_date !== null && item.poster_path !== null
+  );
 
   return (
     <Container>
       <SearchContainer>
         <Input
           placeholder="Pesquisar por..."
-          placeholderTextColor='#ccc'
+          placeholderTextColor="#ccc"
           value={search}
           onChangeText={(text) => setSearch(text)}
         />
-        <SearchButton onPress={() => console.log('')}>
-          <Feather name='search' size={30} color='#e72f49' />
+        <SearchButton onPress={() => console.log("")}>
+          <Feather name="search" size={30} color="#e72f49" />
         </SearchButton>
       </SearchContainer>
-      {
-        loading ?
-          <Loading /> :
-          <ListMovies
-            data={filteredMovies}
-            numColumns={3}
-            horizontal={false}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />} />
-      }
+      {loading ? (
+        <Loading />
+      ) : (
+        <ListMovies
+          data={filteredMovies}
+          numColumns={3}
+          horizontal={false}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => (
+            <SliderItem
+              data={item}
+              navigateDetails={() => navigateDetails(item)}
+            />
+          )}
+        />
+      )}
     </Container>
-  )
+  );
 }
 
-export default Search
+export default Search;

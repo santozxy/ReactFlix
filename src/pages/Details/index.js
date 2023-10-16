@@ -14,17 +14,16 @@ import {
   Votes,
   ListGenres,
   Description,
+  SimilarsContainer,
   SliderMovie,
-  ContainerLoad
+  ContainerLoad,
 } from "./styles";
 
 import { Modal } from "react-native";
 
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-import {
-  useRoute,
-} from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 
 import api, { key } from "../../services/api";
 import Genres from "../../components/Genres";
@@ -34,8 +33,7 @@ import SliderItem from "../../components/SliderItem";
 import { saveMovie, haveMovie, deleteMovie } from "../../utils/storage";
 import Loading from "../../components/Loading";
 
-function Details({navigation}) {
-
+function Details({ navigation }) {
   const scrollViewRef = useRef();
 
   const route = useRoute();
@@ -50,35 +48,36 @@ function Details({navigation}) {
 
   const [favorited, setFavorited] = useState(false);
 
+  console.log(route.params.id);
 
   useEffect(() => {
     let isActive = true;
     const ac = new AbortController();
 
-    async function getMovie() { //Requisição dos detalhes do filme à partir do ID
+    async function getMovie() {
+      //Requisição dos detalhes do filme à partir do ID
       const [movieDetail, movieSimilar] = await Promise.all([
         api.get(`/movie/${route.params.id}`, {
           params: {
             api_key: key,
             language: "pt-BR",
-          }
+          },
         }),
         api.get(`/movie/${route.params.id}/similar`, {
           params: {
             api_key: key,
             language: "pt-BR",
             page: 1,
-          }
+          },
         }),
-      ])
+      ]);
       if (isActive) {
-        setMovie(movieDetail.data)
-        setSimilars(getListMovies(8, movieSimilar.data.results))
-        const isFavorited = await haveMovie(movieDetail.data)
-        setFavorited(isFavorited)
-        setLoading(false)
+        setMovie(movieDetail.data);
+        setSimilars(getListMovies(8, movieSimilar.data.results));
+        const isFavorited = await haveMovie(movieDetail.data);
+        setFavorited(isFavorited);
+        setLoading(false);
       }
-
     }
     getMovie();
     scrollTop();
@@ -95,20 +94,18 @@ function Details({navigation}) {
   }
 
   function navigateDetails(item) {
-    navigation.navigate('Details', { id: item.id })
+    navigation.navigate("Details", { id: item.id });
   }
 
   async function favoriteMovie(movie) {
-
     if (favorited) {
       await deleteMovie(movie.id);
       setFavorited(false);
-      alert('filme foi removido')
-    }
-    else {
-      await saveMovie('@reactflix', movie)
+      alert("filme foi removido");
+    } else {
+      await saveMovie("@reactflix", movie);
       setFavorited(true);
-      alert('filme foi salvo')
+      alert("filme foi salvo");
     }
   }
 
@@ -117,53 +114,46 @@ function Details({navigation}) {
       <ContainerLoad>
         <Loading />
       </ContainerLoad>
-    )
+    );
   }
 
   return (
     <Container ref={scrollViewRef} showsVerticalScrollIndicator={false}>
       <Header>
         <HeaderButton onPress={() => navigation.goBack()}>
-          <Feather
-            name="arrow-left"
-            size={28}
-            color="#fff"
-          />
+          <Feather name="arrow-left" size={28} color="#fff" />
         </HeaderButton>
         <HeaderButton onPress={() => favoriteMovie(movie)}>
-          {favorited ?
-            <Ionicons
-              name="bookmark"
-              size={28}
-              color="#e72f49"
-            />
-            :
-            <Ionicons
-              name="bookmark-outline"
-              size={28}
-              color="#fff"
-            />
-          }
+          {favorited ? (
+            <Ionicons name="bookmark" size={28} color="#e72f49" />
+          ) : (
+            <Ionicons name="bookmark-outline" size={28} color="#fff" />
+          )}
         </HeaderButton>
       </Header>
       <BannerContainer>
         <Banner
-          source={{ uri: `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`, }}
+          source={{
+            uri: `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`,
+          }}
           resizeMethod="resize"
         />
         <ButtonLink onPress={() => setOpenLink(true)}>
-          <Feather
-            name="link"
-            size={28}
-            color="#fff"
-          />
+          <Feather name="link" size={28} color="#fff" />
         </ButtonLink>
       </BannerContainer>
 
       <Title numberOfLines={1}>{movie.title}</Title>
       <RatedContainer>
-        <Rate> <Ionicons name='md-star' size={22} color="#e7a74e" />{movie.vote_average?.toFixed(1)}/10</Rate>
-        <Votes><Ionicons name='person' size={22} color="#e7a74e" />{movie.vote_count}</Votes>
+        <Rate>
+          {" "}
+          <Ionicons name="md-star" size={22} color="#e7a74e" />
+          {movie.vote_average?.toFixed(1)}/10
+        </Rate>
+        <Votes>
+          <Ionicons name="person" size={22} color="#e7a74e" />
+          {movie.vote_count}
+        </Votes>
       </RatedContainer>
       <ListGenres
         data={movie?.genres}
@@ -173,22 +163,29 @@ function Details({navigation}) {
         renderItem={({ item }) => <Genres data={item} />}
       />
 
-      <Title>
-        Descrição
-      </Title>
+      <Title>Descrição</Title>
       <Description>{movie.overview}</Description>
-      <Title>
-        Filmes parecidos
-      </Title>
-      <SliderMovie
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={similars}
-        renderItem={({ item }) => <SliderItem data={item} navigateDetails={() => navigateDetails(item)} />}
-        keyExtractor={(item) => String(item.id)}
-      />
+      <SimilarsContainer>
+        <Title>Filmes parecidos</Title>
+        <SliderMovie
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={similars}
+          renderItem={({ item }) => (
+            <SliderItem
+              data={item}
+              navigateDetails={() => navigateDetails(item)}
+            />
+          )}
+          keyExtractor={(item) => String(item.id)}
+        />
+      </SimilarsContainer>
       <Modal animationType="slide" transparent visible={openLink}>
-        <ModalLink link={movie.homepage} title={movie?.title} closeModal={() => setOpenLink(false)} />
+        <ModalLink
+          link={movie.homepage}
+          title={movie?.title}
+          closeModal={() => setOpenLink(false)}
+        />
       </Modal>
     </Container>
   );
