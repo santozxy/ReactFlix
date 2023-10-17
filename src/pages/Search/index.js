@@ -36,9 +36,7 @@ function Search({ navigation }) {
       });
       if (isActive) {
         setMovies(response.data.results);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
       }
     }
 
