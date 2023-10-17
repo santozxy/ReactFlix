@@ -83,10 +83,11 @@ const Home = ({ navigation }) => {
         const topList = getListMovies(10, topData.data.results);
 
         setBannerMovie(nowData.data.results);
-
         setPopularMovies(popularList);
         setTopMovies(topList);
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       }
     }
     getMovies();
@@ -106,76 +107,72 @@ const Home = ({ navigation }) => {
     setSearch("");
   }
 
-  if (loading) {
-    return (
-      <Container>
-        <Loading />
-      </Container>
-    );
-  }
   return (
     <Container>
       <Header title={"React Flix"} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <ScrollContainer showsVerticalScrollIndicator={false}>
+          <Title>Em cartaz</Title>
+          <Carousel
+            loop
+            width={width}
+            height={width / 1.7}
+            autoPlay={true}
+            data={bannerMovie}
+            scrollAnimationDuration={2500}
+            renderItem={({ item }) => (
+              <BannerButton
+                activeOpacity={0.8}
+                onPress={() => navigateDetails(item)}
+              >
+                <Banner
+                  source={{
+                    uri: `https://image.tmdb.org/t/p/w780/${item.backdrop_path}`,
+                  }}
+                  resizeMethod="resize"
+                />
+                <BannerTitle>
+                  <MaterialCommunityIcons
+                    name="movie-open"
+                    color="#e72f49"
+                    size={17}
+                  />{" "}
+                  {item.title}
+                </BannerTitle>
+              </BannerButton>
+            )}
+          />
 
-      <ScrollContainer showsVerticalScrollIndicator={false}>
-        <Title>Em cartaz</Title>
-        <Carousel
-          loop
-          width={width}
-          height={width / 1.7}
-          autoPlay={true}
-          data={bannerMovie}
-          scrollAnimationDuration={2500}
-          renderItem={({ item }) => (
-            <BannerButton
-              activeOpacity={0.8}
-              onPress={() => navigateDetails(item)}
-            >
-              <Banner
-                source={{
-                  uri: `https://image.tmdb.org/t/p/original/${item.backdrop_path}`,
-                }}
-                resizeMethod="resize"
+          <Title>Populares</Title>
+          <SliderMovie
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={popularMovies}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <SliderItem
+                data={item}
+                navigateDetails={() => navigateDetails(item)}
               />
-              <BannerTitle>
-                <MaterialCommunityIcons
-                  name="movie-open"
-                  color="#e72f49"
-                  size={17}
-                />{" "}
-                {item.title}
-              </BannerTitle>
-            </BannerButton>
-          )}
-        />
-
-        <Title>Populares</Title>
-        <SliderMovie
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={popularMovies}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <SliderItem
-              data={item}
-              navigateDetails={() => navigateDetails(item)}
-            />
-          )}
-        />
-        <Title>Mais votados</Title>
-        <SliderMovie
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={topMovies}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <SliderItem
-              data={item}
-              navigateDetails={() => navigateDetails(item)}
-            />
-          )}
-        />
-      </ScrollContainer>
+            )}
+          />
+          <Title>Mais votados</Title>
+          <SliderMovie
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={topMovies}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <SliderItem
+                data={item}
+                navigateDetails={() => navigateDetails(item)}
+              />
+            )}
+          />
+        </ScrollContainer>
+      )}
     </Container>
   );
 };

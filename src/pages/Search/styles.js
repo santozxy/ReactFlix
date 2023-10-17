@@ -39,6 +39,10 @@ export const ListMovies = styled.FlatList`
 
 export const Name = styled.Text``;
 
-export const CategoriesContainer = styled.View``;
 
-export const ListCategories = styled.FlatList``;
+
+export const ListCategories = styled.FlatList`
+  flex: 1;
+  align-self: center;
+  margin-top: 50px;
+`;

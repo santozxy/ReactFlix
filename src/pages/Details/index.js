@@ -76,7 +76,9 @@ function Details({ navigation }) {
         setSimilars(getListMovies(8, movieSimilar.data.results));
         const isFavorited = await haveMovie(movieDetail.data);
         setFavorited(isFavorited);
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       }
     }
     getMovie();
@@ -134,7 +136,7 @@ function Details({ navigation }) {
       <BannerContainer>
         <Banner
           source={{
-            uri: `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`,
+            uri: `https://image.tmdb.org/t/p/w780/${movie.backdrop_path}`,
           }}
           resizeMethod="resize"
         />
