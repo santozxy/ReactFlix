@@ -50,7 +50,7 @@ function Search({ navigation }) {
   }, [search]);
 
   function navigateDetails(item) {
-    navigation.navigate("Details", { id: item.id });
+    navigation.navigate("Details", { id: item.id, link: "Search" });
   }
 
   const filteredMovies = movies.filter(

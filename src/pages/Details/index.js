@@ -14,9 +14,9 @@ import {
   Votes,
   ListGenres,
   Description,
-  SimilarsContainer,
   SliderMovie,
   ContainerLoad,
+  ToastifyContainer,
 } from "./styles";
 
 import { Modal } from "react-native";
@@ -32,6 +32,7 @@ import { getListMovies } from "../../utils/movie";
 import SliderItem from "../../components/SliderItem";
 import { saveMovie, haveMovie, deleteMovie } from "../../utils/storage";
 import Loading from "../../components/Loading";
+import Toastify from "../../components/Toastify";
 
 function Details({ navigation }) {
   const scrollViewRef = useRef();
@@ -47,6 +48,8 @@ function Details({ navigation }) {
   const [openLink, setOpenLink] = useState(false);
 
   const [favorited, setFavorited] = useState(false);
+
+  const [showToastify, setShowToastify] = useState(null);
 
   console.log(route.params.id);
 
@@ -76,9 +79,7 @@ function Details({ navigation }) {
         setSimilars(getListMovies(8, movieSimilar.data.results));
         const isFavorited = await haveMovie(movieDetail.data);
         setFavorited(isFavorited);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
       }
     }
     getMovie();
@@ -103,11 +104,17 @@ function Details({ navigation }) {
     if (favorited) {
       await deleteMovie(movie.id);
       setFavorited(false);
-      alert("filme foi removido");
+      setShowToastify(true);
+      setTimeout(() => {
+        setShowToastify(false);
+      }, 2000);
     } else {
       await saveMovie("@reactflix", movie);
       setFavorited(true);
-      alert("filme foi salvo");
+      setShowToastify(true);
+      setTimeout(() => {
+        setShowToastify(false);
+      }, 2000);
     }
   }
 
@@ -122,7 +129,7 @@ function Details({ navigation }) {
   return (
     <Container ref={scrollViewRef} showsVerticalScrollIndicator={false}>
       <Header>
-        <HeaderButton onPress={() => navigation.goBack()}>
+        <HeaderButton onPress={() => navigation.navigate(route.params.link)}>
           <Feather name="arrow-left" size={28} color="#fff" />
         </HeaderButton>
         <HeaderButton onPress={() => favoriteMovie(movie)}>
@@ -144,6 +151,13 @@ function Details({ navigation }) {
           <Feather name="link" size={28} color="#fff" />
         </ButtonLink>
       </BannerContainer>
+      {showToastify ? (
+        <ToastifyContainer>
+          <Toastify message={favorited ? "Salvo" : "Removido"} />
+        </ToastifyContainer>
+      ) : (
+        ""
+      )}
 
       <Title numberOfLines={1}>{movie.title}</Title>
       <RatedContainer>
@@ -167,21 +181,21 @@ function Details({ navigation }) {
 
       <Title>Descrição</Title>
       <Description>{movie.overview}</Description>
-      <SimilarsContainer>
-        <Title>Filmes parecidos</Title>
-        <SliderMovie
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={similars}
-          renderItem={({ item }) => (
-            <SliderItem
-              data={item}
-              navigateDetails={() => navigateDetails(item)}
-            />
-          )}
-          keyExtractor={(item) => String(item.id)}
-        />
-      </SimilarsContainer>
+
+      <Title>Filmes parecidos</Title>
+      <SliderMovie
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={similars}
+        renderItem={({ item }) => (
+          <SliderItem
+            data={item}
+            navigateDetails={() => navigateDetails(item)}
+          />
+        )}
+        keyExtractor={(item) => String(item.id)}
+      />
+
       <Modal animationType="slide" transparent visible={openLink}>
         <ModalLink
           link={movie.homepage}

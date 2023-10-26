@@ -1,7 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "styled-components/native";
-import { Platform } from "react-native";
 
 import StackRoutes from "./StackRoutes";
 import Movies from "../pages/Movies";

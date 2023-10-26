@@ -23,11 +23,7 @@ import Loading from "../../components/Loading";
 const Home = ({ navigation }) => {
   const focused = useIsFocused();
 
-  const [search, setSearch] = useState("");
-
   const [bannerMovie, setBannerMovie] = useState({});
-
-  const [nowMovies, setNowMovies] = useState([]);
 
   const [popularMovies, setPopularMovies] = useState([]);
 
@@ -37,14 +33,6 @@ const Home = ({ navigation }) => {
 
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
-
-  // const response = await api.get('/movie/now_playing', {
-  //   params: {
-  //     api_key: key,
-  //     language: 'pt-BR',
-  //     page: 1,
-  //   }
-  // })
 
   useEffect(() => {
     let isActive = true;
@@ -75,7 +63,6 @@ const Home = ({ navigation }) => {
       ]);
 
       if (isActive) {
-        const nowList = getListMovies(10, nowData.data.results);
         const popularList = getListMovies(10, popularData.data.results);
         const topList = getListMovies(10, topData.data.results);
 
@@ -95,13 +82,7 @@ const Home = ({ navigation }) => {
   }, [focused]);
 
   function navigateDetails(item) {
-    navigation.navigate("Details", { id: item.id });
-  }
-
-  function handleSearch() {
-    if (search === "") return;
-    navigation.navigate("Search", { name: search });
-    setSearch("");
+    navigation.navigate("Details", { id: item.id, link: "Home" });
   }
 
   return (

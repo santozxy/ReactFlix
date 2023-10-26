@@ -44,6 +44,18 @@ export const Banner = styled.Image`
   border-bottom-right-radius: 20px;
 `;
 
+export const ToastifyContainer = styled.View`
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 7%;
+  padding: 0 20px;
+`;
+
 export const BannerContainer = styled.TouchableOpacity`
   position: relative;
 `;
@@ -101,8 +113,4 @@ export const Description = styled.Text`
 
 export const SliderMovie = styled.FlatList`
   height: 300px;
-`;
-
-export const SimilarsContainer = styled.View`
-  margin-bottom: 60px;
 `;

@@ -4,8 +4,8 @@ export const Container = styled.TouchableOpacity`
   padding: 16px;
   width: 100%;
   height: 200px;
-  margin: 20px 0;
-  border-radius: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
 `;
 export const Title = styled.Text`
   padding: 8px;
@@ -21,6 +21,7 @@ export const Banner = styled.Image`
   width: 100%;
   height: 200px;
   object-fit: cover;
+  border-radius: 8px;
 `;
 export const BannerContainer = styled.View`
   position: relative;
