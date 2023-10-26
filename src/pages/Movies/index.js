@@ -48,7 +48,7 @@ function Movies({ navigation }) {
         <MessageContainer>
           <MaterialCommunityIcons
             name="movie-open-off"
-            size={40}
+            size={60}
             color={colors.primary}
           />
           <Title>Você não possui nenhum filme salvo</Title>

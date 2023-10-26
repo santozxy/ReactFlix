@@ -51,8 +51,6 @@ function Details({ navigation }) {
 
   const [showToastify, setShowToastify] = useState(null);
 
-  console.log(route.params.id);
-
   useEffect(() => {
     let isActive = true;
     const ac = new AbortController();

@@ -6,9 +6,12 @@ import {
   SearchButton,
   Input,
   ListContainer,
+  MessageContainer,
+  Title,
 } from "./styles";
+import { useTheme } from "styled-components/native";
 
-import { Feather } from "@expo/vector-icons";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import api, { key } from "../../services/api";
 import Header from "../../components/Header";
@@ -16,6 +19,8 @@ import SliderItem from "../../components/SliderItem";
 import Loading from "../../components/Loading";
 
 function Search({ navigation }) {
+  const { colors } = useTheme();
+
   const [movies, setMovies] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -68,12 +73,21 @@ function Search({ navigation }) {
           onChangeText={(text) => setSearch(text)}
         />
         <SearchButton onPress={() => console.log("")}>
-          <Feather name="search" size={30} color="#e72f49" />
+          <Feather name="search" size={30} color={colors.primary} />
         </SearchButton>
       </SearchContainer>
 
       {loading ? (
         <Loading />
+      ) : filteredMovies.length === 0 ? (
+        <MessageContainer>
+          <MaterialCommunityIcons
+            name="movie-search"
+            size={60}
+            color={colors.primary}
+          />
+          <Title>Descubra a variedade de filmes existentes!</Title>
+        </MessageContainer>
       ) : (
         <ListContainer>
           <ListMovies
@@ -84,7 +98,6 @@ function Search({ navigation }) {
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (
               <SliderItem
-                width="100%"
                 data={item}
                 navigateDetails={() => navigateDetails(item)}
               />
