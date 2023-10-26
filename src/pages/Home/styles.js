@@ -6,17 +6,6 @@ export const Container = styled.SafeAreaView`
 `;
 export const ScrollContainer = styled.ScrollView`
   flex: 1;
-  margin-bottom: 50px;
-`;
-
-export const Input = styled.TextInput`
-  background-color: rgba(255, 255, 255, 0.4);
-  width: 85%;
-  height: 42px;
-  border-radius: 8px;
-  padding: 8px 15px;
-  font-size: 18px;
-  color: ${(props) => props.theme.colors.textColor};
 `;
 
 export const Title = styled.Text`
@@ -47,5 +36,5 @@ export const BannerTitle = styled.Text`
 `;
 
 export const SliderMovie = styled.FlatList`
-  height: 280px;
+  flex: 1;
 `;

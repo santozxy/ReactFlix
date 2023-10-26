@@ -5,16 +5,15 @@ import {
   SearchContainer,
   SearchButton,
   Input,
-  ListCategories,
+  ListContainer,
 } from "./styles";
 
 import { Feather } from "@expo/vector-icons";
-import { useRoute } from "@react-navigation/native";
 
 import api, { key } from "../../services/api";
+import Header from "../../components/Header";
 import SliderItem from "../../components/SliderItem";
 import Loading from "../../components/Loading";
-import Categories from "../../components/Categories";
 
 function Search({ navigation }) {
   const [movies, setMovies] = useState([]);
@@ -58,43 +57,9 @@ function Search({ navigation }) {
     (item) => item.release_date !== null && item.poster_path !== null
   );
 
-  const categories = [
-    {
-      id: 1,
-      title: "Ação",
-    },
-    {
-      id: 2,
-      title: "Terror",
-    },
-    {
-      id: 3,
-      title: "Thriller",
-    },
-    {
-      id: 4,
-      title: "Drama",
-    },
-    {
-      id: 5,
-      title: "Comédia",
-    },
-    {
-      id: 6,
-      title: "Família",
-    },
-    {
-      id: 6,
-      title: "Animação",
-    },
-    {
-      id: 6,
-      title: "Sci-Fi",
-    },
-  ];
-
   return (
     <Container>
+      <Header title="Descobrir" />
       <SearchContainer>
         <Input
           placeholder="Pesquisar por..."
@@ -107,31 +72,25 @@ function Search({ navigation }) {
         </SearchButton>
       </SearchContainer>
 
-      {search === "" ? (
-        <ListCategories
-          data={categories}
-          numColumns={2}
-          horizontal={false}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Categories categorie={item.title} />}
-        />
-      ) : loading ? (
+      {loading ? (
         <Loading />
       ) : (
-        <ListMovies
-          data={filteredMovies}
-          numColumns={3}
-          horizontal={false}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <SliderItem
-              data={item}
-              navigateDetails={() => navigateDetails(item)}
-            />
-          )}
-        />
+        <ListContainer>
+          <ListMovies
+            data={filteredMovies}
+            numColumns={3}
+            horizontal={false}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <SliderItem
+                width="100%"
+                data={item}
+                navigateDetails={() => navigateDetails(item)}
+              />
+            )}
+          />
+        </ListContainer>
       )}
     </Container>
   );

@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 export const Container = styled.SafeAreaView`
   flex: 1;
   background-color: ${(props) => props.theme.colors.secondary};
-  height: 100%;
 `;
 
 export const SearchContainer = styled.View`
@@ -33,16 +32,8 @@ export const SearchButton = styled.TouchableOpacity`
 `;
 export const ListMovies = styled.FlatList`
   flex: 1;
-  width: 100%;
-  height: 100%;
 `;
 
-export const Name = styled.Text``;
-
-
-
-export const ListCategories = styled.FlatList`
+export const ListContainer = styled.View`
   flex: 1;
-  align-self: center;
-  margin-top: 50px;
 `;

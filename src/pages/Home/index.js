@@ -5,9 +5,6 @@ import Carousel from "react-native-reanimated-carousel";
 
 import {
   Container,
-  SearchContainer,
-  Input,
-  SearchButton,
   Title,
   BannerButton,
   Banner,
@@ -16,7 +13,7 @@ import {
   ScrollContainer,
 } from "./styles";
 
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "../../components/Header";
 import SliderItem from "../../components/SliderItem";
 import api, { key } from "../../services/api";

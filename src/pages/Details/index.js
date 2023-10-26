@@ -78,7 +78,7 @@ function Details({ navigation }) {
         setFavorited(isFavorited);
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 1000);
       }
     }
     getMovie();

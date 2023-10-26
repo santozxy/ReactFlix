@@ -1,33 +1,30 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useTheme } from "styled-components/native";
+import { Platform } from "react-native";
 
 import StackRoutes from "./StackRoutes";
 import Movies from "../pages/Movies";
 import Search from "../pages/Search";
-import { useTheme } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
-const Routes = () => {
+function Routes() {
   const { colors } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          position: "absolute",
-          bottom: "4%",
-          left: "12%",
-          right: "12%",
           paddingTop: 8,
           paddingBottom: 8,
-          borderRadius: 15,
-          height: 70,
+          height: 60,
           backgroundColor: colors.primary,
           borderColor: colors.textColor,
           justifyContent: "center",
           alignItems: "center",
           borderTopWidth: 0,
+          elevation: 0,
         },
         tabBarActiveTintColor: colors.textColor,
         tabBarInactiveTintColor: "#ccc",
@@ -79,6 +76,6 @@ const Routes = () => {
       />
     </Tab.Navigator>
   );
-};
+}
 
 export default Routes;

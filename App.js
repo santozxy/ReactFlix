@@ -7,7 +7,7 @@ import { theme } from "./src/theme/theme";
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer theme={theme}>
+      <NavigationContainer>
         <Routes />
       </NavigationContainer>
     </ThemeProvider>
